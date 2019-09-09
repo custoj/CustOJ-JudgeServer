@@ -9,7 +9,7 @@ RUN buildDeps='software-properties-common git libtool cmake python-dev python3-p
 	cd /tmp && wget http://launchpadlibrarian.net/371512681/libtinfo6_6.1+20180210-4ubuntu1_amd64.deb && wget http://launchpadlibrarian.net/373832437/chezscheme9.5_9.5+dfsg-5_amd64.deb && apt-get install ./libtinfo6_6.1+20180210-4ubuntu1_amd64.deb && apt-get install ./chezscheme9.5_9.5+dfsg-5_amd64.deb && mv /usr/bin/chezscheme9.5 /usr/bin/scheme && rm ./* && \
 	cd /tmp && git clone --depth 1 https://github.com/pocmo/Python-Brainfuck.git && mv Python-Brainfuck /usr/bin/brainfuck && \
     pip3 install --no-cache-dir psutil gunicorn flask requests && \
-    cd /tmp && git clone -b newnew  --depth 1 https://github.com/QingdaoU/Judger && cd Judger && \ 
+    cd /tmp && git clone -b newnew  --depth 1 https://github.com/QingdaoU/Judger && cd Judger && \
     mkdir build && cd build && cmake .. && make && make install && cd ../bindings/Python && python3 setup.py install && \
     apt-get purge -y --auto-remove $buildDeps && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
@@ -19,5 +19,6 @@ RUN buildDeps='software-properties-common git libtool cmake python-dev python3-p
 HEALTHCHECK --interval=5s --retries=3 CMD python3 /code/service.py
 ADD server /code
 WORKDIR /code
+RUN gcc -shared -fPIC -o unbuffer.so unbuffer.c
 EXPOSE 8080
 ENTRYPOINT /code/entrypoint.sh
