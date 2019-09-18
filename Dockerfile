@@ -25,7 +25,7 @@ RUN	curl -s https://get.sdkman.io | bash && source /root/.sdkman/bin/sdkman-init
 RUN	cd /tmp && git clone --depth 1 https://github.com/pocmo/Python-Brainfuck.git && mv Python-Brainfuck /usr/bin/brainfuck
 
 RUN pip3 install --no-cache-dir psutil gunicorn flask requests && \
-    cd /tmp && git clone -b newnew  --depth 1 https://github.com/QingdaoU/Judger && cd Judger && \
+    cd /tmp && git clone -b master  --depth 1 https://github.com/custoj/CustOJ-Sandbox && cd CustOJ-Sandbox && \
     mkdir build && cd build && cmake .. && make && make install && cd ../bindings/Python && python3 setup.py install && \
     apt-get purge -y --auto-remove $buildDeps && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /root/.sdkman && \
